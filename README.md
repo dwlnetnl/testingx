@@ -1,4 +1,4 @@
-# testingx
+# testingx [![GoDoc](https://godoc.org/github.com/dwlnetnl/testingx?status.svg)](https://godoc.org/github.com/dwlnetnl/testingx)
 Nice additions to the standard testing package.
 
 # Rational
