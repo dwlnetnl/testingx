@@ -65,6 +65,6 @@ func InDelta(lhs, rhs, delta float64) bool {
 // SkipIfShort causes the test to be skipped when running with -short.
 func SkipIfShort(t *testing.T) {
 	if testing.Short() {
-		t.Skip("Skipping test with -short")
+		t.Skip("skipping test with -short")
 	}
 }
