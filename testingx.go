@@ -4,6 +4,7 @@ package testingx
 import (
 	"math"
 	"regexp"
+	"testing"
 )
 
 // EqualErrors compares errors lhs and rhs for equality.
@@ -59,4 +60,11 @@ func Recover(fn func()) (v interface{}) {
 // InDelta returns true if floats lhs and rhs are equal within delta.
 func InDelta(lhs, rhs, delta float64) bool {
 	return math.Abs(lhs-rhs) < delta
+}
+
+// SkipIfShort causes the test to be skipped when running with -short.
+func SkipIfShort(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test with -short")
+	}
 }
