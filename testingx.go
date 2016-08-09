@@ -1,7 +1,10 @@
 // Package testingx implements utilities for tests.
 package testingx
 
-import "regexp"
+import (
+	"math"
+	"regexp"
+)
 
 // EqualErrors compares errors lhs and rhs for equality.
 func EqualErrors(lhs, rhs error) bool {
@@ -51,4 +54,9 @@ func Recover(fn func()) (v interface{}) {
 
 	fn()
 	return
+}
+
+// InDelta returns true if floats lhs and rhs are equal within delta.
+func InDelta(lhs, rhs, delta float64) bool {
+	return math.Abs(lhs-rhs) < delta
 }

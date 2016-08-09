@@ -3,6 +3,7 @@ package testingx
 import (
 	"errors"
 	"fmt"
+	"math"
 	"regexp"
 	"testing"
 )
@@ -112,5 +113,20 @@ func TestPanics(t *testing.T) {
 
 	if !paniced {
 		t.Error("Panics did not panic")
+	}
+}
+
+func TestInDelta(t *testing.T) {
+	cases := []struct {
+		lhs, rhs, delta float64
+	}{
+		{math.Sqrt(3), 1.732, 1e-3},
+		{math.Pow(3, 1.2), 3.737192, 1e-6},
+	}
+
+	for _, c := range cases {
+		if !InDelta(c.lhs, c.rhs, c.delta) {
+			t.Errorf("%f != %f ± %f", c.lhs, c.rhs, c.delta)
+		}
 	}
 }
