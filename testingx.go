@@ -34,8 +34,8 @@ func MatchError(err error, re string) bool {
 	return MatchErrorRegexp(err, regexp.MustCompile(re))
 }
 
-// MatchErrorRegexp returns true if error err is non-nil and the error string matches
-// regular expression re. It will panic if re is nil.
+// MatchErrorRegexp returns true if error err is non-nil and the error string
+// matches regular expression re. It will panic if re is nil.
 func MatchErrorRegexp(err error, re *regexp.Regexp) bool {
 	if err == nil {
 		return false
