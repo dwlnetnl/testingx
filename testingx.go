@@ -27,16 +27,17 @@ func EqualError(err error, str string) bool {
 // MatchError returns true if error err is non-nil and the error string matches
 // regular expression re. It will panic if re cannot compiled.
 func MatchError(err error, re string) bool {
+	return MatchErrorRegexp(err, regexp.MustCompile(re))
+}
+
+// MatchErrorRegexp returns true if error err is non-nil and the error string matches
+// regular expression re. It will panic if re is nil.
+func MatchErrorRegexp(err error, re *regexp.Regexp) bool {
 	if err == nil {
 		return false
 	}
 
-	match, merr := regexp.MatchString(re, err.Error())
-	if merr != nil {
-		panic(err)
-	}
-
-	return match
+	return re.MatchString(err.Error())
 }
 
 // Panics returns true if function fn panics.

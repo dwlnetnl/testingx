@@ -3,6 +3,7 @@ package testingx
 import (
 	"errors"
 	"fmt"
+	"regexp"
 	"testing"
 )
 
@@ -71,7 +72,36 @@ func TestMatchError_panic(t *testing.T) {
 	})
 
 	if !paniced {
-		t.Error("IsError did not panic when regular expression cannot be compiled")
+		t.Error("MatchError did not panic when regular expression cannot be compiled")
+	}
+}
+
+func TestMatchErrorRegexp(t *testing.T) {
+	cases := []struct {
+		in   error
+		want bool
+	}{
+		{errors.New("error"), true},
+		{nil, false},
+	}
+
+	re := regexp.MustCompile("^error$")
+	for _, c := range cases {
+		got := MatchErrorRegexp(c.in, re)
+
+		if got != c.want {
+			t.Errorf("MatchErrorRegexp(%#v, %v) = %v, want: %v", c.in, re, got, c.want)
+		}
+	}
+}
+
+func TestMatchErrorRegexp_panic(t *testing.T) {
+	paniced := Panics(func() {
+		MatchErrorRegexp(errors.New("error"), nil)
+	})
+
+	if !paniced {
+		t.Error("MatchErrorRegexp did not panic when regular expression is nil")
 	}
 }
 
