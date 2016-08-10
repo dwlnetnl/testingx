@@ -4,10 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
-	"os"
-	"os/exec"
 	"regexp"
-	"strings"
 	"testing"
 )
 
@@ -130,47 +127,6 @@ func TestInDelta(t *testing.T) {
 	for _, c := range cases {
 		if !InDelta(c.lhs, c.rhs, c.delta) {
 			t.Errorf("%f != %f ± %f", c.lhs, c.rhs, c.delta)
-		}
-	}
-}
-
-func TestSkipIfShort(t *testing.T) {
-	if testing.Short() {
-		defer func() {
-			if !t.Skipped() {
-				t.Error("test is not skipped with -short")
-			}
-		}()
-
-		SkipIfShort(t)
-		return
-	}
-
-	if os.Getenv("SKIPIFSHORT") != "1" {
-		cmd := exec.Command("go", "test", "-short", "-run=TestSkipIfShort")
-		cmd.Env = append(cmd.Env, "GOPATH="+os.Getenv("GOPATH"))
-		cmd.Env = append(cmd.Env, "SKIPIFSHORT=1")
-
-		if testing.Verbose() {
-			cmd.Args = append(cmd.Args, "-v")
-		}
-
-		output, err := cmd.Output()
-		if err != nil {
-			err, ok := err.(*exec.ExitError)
-			// exit status 2: invocation failed
-			// or not an *exec.ExitError
-			if !ok || ok && len(err.Stderr) > 0 {
-				t.Errorf("go test -short returned error: %v", err)
-				return
-			}
-
-			// exit status 1: test failed
-			for _, line := range strings.Split(string(output), "\n") {
-				t.Log(line)
-			}
-
-			t.Fail()
 		}
 	}
 }
