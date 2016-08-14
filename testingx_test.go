@@ -39,11 +39,11 @@ func TestEqualError(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		const str = "error"
-		got := EqualError(c.in, str)
+		const errstr = "error"
+		got := EqualError(c.in, errstr)
 
 		if got != c.want {
-			t.Errorf("EqualError(%#v, %q) = %v, want: %v", c.in, str, got, c.want)
+			t.Errorf("EqualError(%#v, %q) = %v, want: %v", c.in, errstr, got, c.want)
 		}
 	}
 }

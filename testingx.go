@@ -22,9 +22,9 @@ func EqualErrors(lhs, rhs error) bool {
 }
 
 // EqualError returns true if error err is non-nil and the error string matches
-// string str.
-func EqualError(err error, str string) bool {
-	return err != nil && err.Error() == str
+// string errstr.
+func EqualError(err error, errstr string) bool {
+	return err != nil && err.Error() == errstr
 }
 
 // MatchError returns true if error err is non-nil and the error string matches
